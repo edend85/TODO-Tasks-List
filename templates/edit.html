@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style/style.css') }}">
+    <title>Document</title>
+</head>
+<body>
+    <div id="editTaskDiv">
+        <h1 class="text-center">Edit Task</h1>
+        <form action="{{url_for('editTask',id=task['id'])}}" method="post" class="d-flex align-items-center flex-column bd-highlight mb-3">
+            <input class="form-control mb-3 form-element" type="text" name="taskTitle" value="{{task['taskTitle']}}">
+            <textarea class="form-control mb-3 form-element" id="exampleFormControlTextarea1" rows="4" name="description">{{task['description']}}</textarea>
+            <button class="btn btn-outline-primary">save</button>
+        </form>  
+    </div>
+</body>
+</html>
