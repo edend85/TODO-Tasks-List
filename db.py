@@ -4,7 +4,7 @@ import os
 class DataBase:
     def __init__(self):
         self.connection_string = (
-            f"DRIVER={os.getenv('DRIVER')};"
+            f"DRIVER={{ODBC Driver 17 for SQL Server}};"
             f"SERVER={os.getenv('DB_SERVER')};"
             f"UID={os.getenv('DB_UID')};"
             f"PWD={os.getenv('DB_PWD')};"
