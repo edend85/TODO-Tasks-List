@@ -1,6 +1,7 @@
 import pyodbc
 from dotenv import load_dotenv
 import os
+load_dotenv()
 class DataBase:
     def __init__(self):
         self.connection_string = (
