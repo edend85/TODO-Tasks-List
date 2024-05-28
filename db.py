@@ -1,8 +1,15 @@
 import pyodbc
-
+from dotenv import load_dotenv
+import os
 class DataBase:
     def __init__(self):
-        self.connection_string = r'DRIVER={SQL Server};SERVER=DESKTOP-6INPB5Q\SQLEXPRESS;DATABASE=Manage_Tasks;'
+        self.connection_string = (
+            f"DRIVER={{ODBC Driver 17 for SQL Server}};"
+            f"SERVER={os.getenv('DB_SERVER')};"
+            f"UID={os.getenv('DB_UID')};"
+            f"PWD={os.getenv('DB_PWD')};"
+            f"DATABASE={os.getenv('DB_NAME')};"
+        )
     def _connect(self):
         return pyodbc.connect(self.connection_string)
 
