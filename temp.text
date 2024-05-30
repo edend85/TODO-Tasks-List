@@ -1,4 +1,0 @@
- def __init__(self):
-        self.connection_string = r'DRIVER={SQL Server};SERVER=DESKTOP-6INPB5Q\SQLEXPRESS;DATABASE=Manage_Tasks;'
-    def _connect(self):
-        return pyodbc.connect(self.connection_string)
