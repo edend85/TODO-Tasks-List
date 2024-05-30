@@ -7,8 +7,8 @@ import os
 
 load_dotenv()
 
-#app = Flask(__name__, template_folder="templates")
-app = Flask(__name__, template_folder="templates", static_folder="static")
+app = Flask(__name__, template_folder="templates")
+
 tasks = DataBase()
 
 def create_success_response(message, data=None):
@@ -18,13 +18,12 @@ def create_success_response(message, data=None):
     if data is not None:
         response_data['data'] = data
     return make_response(jsonify(response_data), 200)
-# Custom error handler for 404 Not Found
+
 @app.errorhandler(404)
 def not_found(error):
     response = make_response(jsonify({"error": "Not found"}), 404)
     return response
 
-# Custom error handler for 500 Internal Server Error
 @app.errorhandler(500)
 def internal_error(error):
     response = make_response(jsonify({"error": "Internal server"}), 500)
@@ -132,5 +131,3 @@ def search():
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0',port=int(os.getenv("PORT")) , debug=True)
-
-#
