@@ -6,7 +6,7 @@ load_dotenv()
 class DataBase:
     def __init__(self):
         self.connection_string = (
-            f"DRIVER={{ODBC Driver 17 for SQL Server}};"
+            f"DRIVER={{SQL Server}};"
             f"SERVER={os.getenv('DB_SERVER')};"
             f"DATABASE={os.getenv('DB_NAME')};"
             f"UID={os.getenv('DB_UID')};"
