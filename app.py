@@ -2,10 +2,7 @@ from flask import Flask, render_template,request,url_for,redirect,abort, jsonify
 from db import DataBase
 import datetime
 import uuid
-from dotenv import load_dotenv
-import os
 
-load_dotenv()
 
 app = Flask(__name__, template_folder="templates")
 tasks = DataBase()
@@ -130,6 +127,6 @@ def search():
 
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=int(os.getenv("PORT")), debug=True)
+    app.run(host='0.0.0.0',port=int("3000") , debug=True)
 
-#port=int("3000")
+#

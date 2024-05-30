@@ -21,4 +21,4 @@ COPY . .
 EXPOSE 3000
 
 # Command to run your Flask application
-CMD ["python", "app.py"]
+CMD ["gunicorn", "-b", "0.0.0.0:3000", "app:app"]
