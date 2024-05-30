@@ -11,6 +11,7 @@ class DataBase:
             f"DATABASE={os.getenv('DB_NAME')};"
             f"UID={os.getenv('DB_UID')};"
             f"PWD={os.getenv('DB_PWD')};"
+            f"TrustServerCertificate=yes;"
         )
     def _connect(self):
         return pyodbc.connect(self.connection_string)
