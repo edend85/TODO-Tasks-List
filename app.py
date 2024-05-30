@@ -8,7 +8,7 @@ import os
 load_dotenv()
 
 #app = Flask(__name__, template_folder="templates")
-app = Flask(__name__, template_folder="../frontend/templates", static_folder="../frontend/static")
+app = Flask(__name__, template_folder="templates", static_folder="static")
 tasks = DataBase()
 
 def create_success_response(message, data=None):
