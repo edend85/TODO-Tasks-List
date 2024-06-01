@@ -2,10 +2,8 @@ from flask import Flask, render_template,request,url_for,redirect,abort, jsonify
 from db import DataBase
 import datetime
 import uuid
-from dotenv import load_dotenv
-import os
+from waitress import serve
 
-load_dotenv()
 
 app = Flask(__name__, template_folder="templates")
 
@@ -130,4 +128,7 @@ def search():
 
 
 if __name__ == '__main__':
-    app.run(port="3000", debug=True)
+    serve(app, host="0.0.0.0", port=3000)
+
+
+#app.run(port="3000", debug=True)
