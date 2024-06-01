@@ -33,4 +33,4 @@ COPY . .
 EXPOSE 3000
 
 # Command to run the app
-CMD ["gunicorn", "--bind", "0.0.0.0:3000", "app:app"]
+CMD ["waitress-serve", "--host", "0.0.0.0", "--port", "3000", "app:app"]
