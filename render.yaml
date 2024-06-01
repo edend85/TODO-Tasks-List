@@ -1,0 +1,19 @@
+services:
+  - type: web
+    name: manage-tasks
+    env: docker
+    plan: Free
+    buildCommand: ""
+    startCommand: waitress-serve --host 0.0.0.0 --port 3000 app:app
+    envVars:
+      - key: DB_SERVER
+        value: "database-1.cxwksqaao0d9.eu-north-1.rds.amazonaws.com,1433"
+      - key: DB_UID
+        value: "admin"
+      - key: DB_PWD
+        value: "Aa12345678"
+      - key: DB_NAME
+        value: "Manage_Tasks"
+    branch: main
+    dockerfilePath: manage-tasks/Dockerfile
+    healthCheckPath: /
