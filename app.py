@@ -128,7 +128,9 @@ def search():
 
 
 if __name__ == '__main__':
-    serve(app, host="0.0.0.0", port=3000)
+    app.run(port="3000", debug=True)
+    
 
 
-#app.run(port="3000", debug=True)
+
+#serve(app, host="0.0.0.0", port=3000)

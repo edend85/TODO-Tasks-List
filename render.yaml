@@ -2,9 +2,9 @@ services:
   - type: web
     name: manage-tasks
     env: docker
-    plan: Free
+    plan: free
     buildCommand: ""
-    startCommand: waitress-serve --host 0.0.0.0 --port 3000 app:app
+    startCommand: python app.py
     envVars:
       - key: DB_SERVER
         value: "database-1.cxwksqaao0d9.eu-north-1.rds.amazonaws.com"
