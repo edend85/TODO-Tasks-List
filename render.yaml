@@ -1,12 +1,11 @@
 services:
   - type: web
-    name: manage-tasks
     env: docker
     plan: free
     github:
       repo: edend85/TODO-Tasks-List
       branch: main
-    dockerfilePath: manage_tasks/Dockerfile  # Adjust the path to your Dockerfile
+    dockerfilePath: manage_tasks/Dockerfile
     envVars:
       - key: DB_SERVER
         value: database-1.cxwksqaao0d9.eu-north-1.rds.amazonaws.com
@@ -18,3 +17,4 @@ services:
         value: Manage_Tasks
     startCommand: python app.py
     healthCheckPath: /
+    port: 3000  # Specify the port your Flask app is running on
