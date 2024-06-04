@@ -6,7 +6,7 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-app = Flask(__name__, template_folder="templates",static_folder='static')
+app = Flask(__name__, template_folder="templates")
 
 tasks = DataBase()
 
