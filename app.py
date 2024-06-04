@@ -53,7 +53,7 @@ def add():
         current_datetime_str = current_datetime.strftime("%Y%m%d")
         tasktitle = request.form['taskTitle']
         description = request.form['description']
-        tasks.add_task(id_task,tasktitle,description,0,current_datetime_str)
+        tasks.add_task(id_task,tasktitle,description,False,current_datetime_str)
         return redirect(url_for("index"))
     except:
         abort(500)
@@ -85,9 +85,9 @@ def status(id):
         task = tasks.get_task(id)
         match task['checked']:
             case 0:
-                tasks.checked_task(id,1)
+                tasks.checked_task(id,True)
             case 1:
-                tasks.checked_task(id,0)
+                tasks.checked_task(id,False)
         return redirect(url_for("index"))
     except:
         abort(500)
