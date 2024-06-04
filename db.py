@@ -44,7 +44,6 @@ class DataBase:
     def all_tasks(self):
         try:
             conn = self._connect()
-            print(conn)
             cursor = conn.cursor()
             tasks = []
             query =  "SELECT * FROM \"Tasks\""
@@ -196,5 +195,5 @@ db = DataBase()
 #db.checked_task("bb57160d011445e2b02c41e4",True)
 #print(db.update_task("bb57160d011445e2b02c41e5",body={"title":"Team Meeting","description":"Attend the weekly team meeting to discuss project updates"}))
 #print(db.search_task("to"))
-print(db.sort_tasks(False))
+#print(db.sort_tasks(False))
 #print(db.sort_tasks(True))
