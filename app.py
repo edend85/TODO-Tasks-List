@@ -1,5 +1,6 @@
 from flask import Flask, render_template,request,url_for,redirect,abort, jsonify,make_response
 from db import DataBase
+import os
 import datetime
 import uuid
 from dotenv import load_dotenv
@@ -7,7 +8,7 @@ from dotenv import load_dotenv
 load_dotenv()
 
 app = Flask(__name__, template_folder="templates")
-
+port = int(os.environ.get("PORT",3000))
 tasks = DataBase()
 
 def create_success_response(message, data=None):
@@ -129,7 +130,7 @@ def search():
 
 
 if __name__ == '__main__':
-    app.run(port="3000", debug=True)
+    app.run(host='0.0.0.0',port=port, debug=True)
     
     
     

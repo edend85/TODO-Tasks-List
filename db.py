@@ -1,8 +1,9 @@
-import pyodbc
 import psycopg2
 from dotenv import load_dotenv
 import os
+
 load_dotenv()
+
 class DataBase:
     def __init__(self):
         self.connection_string = {
@@ -188,12 +189,3 @@ class DataBase:
             conn.close()
     
 db = DataBase()
-#print(db.all_tasks())
-#print(db.get_task("bb57160d011445e2b02c41e4"))
-print(db.add_task("bb57160d011445e2b02c41e2","review the budget","one of my tasks in the morning is to make lunches for everyone in the family Verb I have been tasked by the host with bringing the pies for Thanksgiving this year.",False,"08/08/2024"))
-#print(db.delete_task("bb57160d011445e2b02c41e2"))
-#db.checked_task("bb57160d011445e2b02c41e4",True)
-#print(db.update_task("bb57160d011445e2b02c41e5",body={"title":"Team Meeting","description":"Attend the weekly team meeting to discuss project updates"}))
-#print(db.search_task("to"))
-#print(db.sort_tasks(False))
-#print(db.sort_tasks(True))
