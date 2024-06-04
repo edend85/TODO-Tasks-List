@@ -1,26 +1,53 @@
 import pyodbc
-
+import psycopg2
 from dotenv import load_dotenv
 import os
 load_dotenv()
 class DataBase:
     def __init__(self):
-        self.connection_string = (
-            f"DRIVER={{ODBC Driver 17 for SQL Server}};"
-            f"SERVER={os.getenv('DB_SERVER')};"
-            f"DATABASE={os.getenv('DB_NAME')};"
-            f"UID={os.getenv('DB_UID')};"
-            f"PWD={os.getenv('DB_PWD')};"
-        )
+        self.connection_string = {
+            'dbname': os.getenv('DB_NAME'),
+            'user': os.getenv('DB_USER'),
+            'password': os.getenv('DB_PASS'),
+            'host': os.getenv('DB_HOST'),
+            'port': os.getenv('DB_PORT')
+            }
+        self.create_table()
+
     def _connect(self):
-        return pyodbc.connect(self.connection_string)
+        try:
+            return psycopg2.connect(**self.connection_string)
+        except Exception as e:
+            print(f"Error connecting to database: {e}")
+            raise
+    
+    def create_table(self):
+        try:
+            conn = self._connect()
+            cursor = conn.cursor()
+            cursor.execute("""
+                CREATE TABLE IF NOT EXISTS "Tasks" (
+                    "id" varchar(50) PRIMARY KEY NOT NULL,
+                    "title" VARCHAR(255) NOT NULL,
+                    "description" TEXT NOT NULL,
+                    "checked" BOOLEAN NOT NULL DEFAULT FALSE,
+                    "current_date" DATE NOT NULL
+                )
+            """)
+            conn.commit()
+        except Exception as e:
+            print(f"Error creating table: {e}")
+            raise
+        finally:
+            conn.close()
 
     def all_tasks(self):
         try:
             conn = self._connect()
+            print(conn)
             cursor = conn.cursor()
             tasks = []
-            query =  "SELECT * FROM Tasks"
+            query =  "SELECT * FROM \"Tasks\""
             cursor.execute(query)
             for row in cursor.fetchall():
                 task = {
@@ -43,7 +70,7 @@ class DataBase:
             conn = self._connect()
             cursor = conn.cursor()
             task = {}
-            query = f"select * from Tasks where Id = '{task_Id}'"
+            query = f"select * from \"Tasks\" where \"id\" = '{task_Id}'"
             cursor.execute(query)
             for row in cursor.fetchall():
                 task = {
@@ -65,7 +92,7 @@ class DataBase:
         try:
             conn = self._connect()
             cursor = conn.cursor()
-            query = f"INSERT INTO Tasks(Id,Title,Description,Checked,CurrentDate)VALUES('{id_task}','{title_task}','{desc_task}',{checked_task},'{date_task}')"
+            query = f"INSERT INTO \"Tasks\"(\"id\",\"title\", \"description\", \"checked\", \"current_date\")VALUES('{id_task}','{title_task}','{desc_task}',{checked_task},'{date_task}')"
             cursor.execute(query)
             conn.commit()
         except Exception as e:
@@ -78,7 +105,7 @@ class DataBase:
         try:
             conn = self._connect()
             cursor = conn.cursor()
-            query = f"DELETE FROM Tasks WHERE Id = '{id_task}'"
+            query = f"DELETE FROM \"Tasks\" WHERE \"id\" = '{id_task}'"
             cursor.execute(query)
             conn.commit()
         except Exception as e:
@@ -90,7 +117,7 @@ class DataBase:
         try:
             conn = self._connect()
             cursor = conn.cursor()
-            query = f"UPDATE Tasks SET Title='{body['Title']}',Description='{body['Description']}' WHERE Id = '{id}'"
+            query = f"UPDATE \"Tasks\" SET \"title\"='{body['title']}',\"description\"='{body['description']}' WHERE \"id\" = '{id}'"
             cursor.execute(query)
             conn.commit()
         except Exception as e:
@@ -103,7 +130,7 @@ class DataBase:
         try:
             conn = self._connect()
             cursor = conn.cursor()
-            query = f"UPDATE Tasks SET Checked={checked_task} WHERE Id = '{id}'"
+            query = f"UPDATE \"Tasks\" SET \"checked\"={checked_task} WHERE \"id\" = '{id}'"
             cursor.execute(query)
             conn.commit()
         except Exception as e:
@@ -118,9 +145,9 @@ class DataBase:
             tasks =[]
             query = ""
             if s:
-                query = f"SELECT * FROM Tasks ORDER BY CurrentDate DESC"
+                query = f"SELECT * FROM \"Tasks\" ORDER BY \"current_date\" DESC"
             else:
-                query = f"SELECT * FROM Tasks ORDER BY CurrentDate"
+                query = f"SELECT * FROM \"Tasks\" ORDER BY \"current_date\" "
             cursor.execute(query)
             for row in cursor.fetchall():
                 task = {
@@ -143,7 +170,7 @@ class DataBase:
             conn = self._connect()
             cursor = conn.cursor()
             tasks = []
-            query = f"SELECT * FROM Tasks WHERE (Title like '%{value}%') or (Description like '%{value}%')"
+            query = f"SELECT * FROM \"Tasks\" WHERE (\"title\" like '%{value}%') or (\"description\" like '%{value}%')"
             cursor.execute(query)
             for row in cursor.fetchall():
                 task = {
@@ -162,3 +189,12 @@ class DataBase:
             conn.close()
     
 db = DataBase()
+#print(db.all_tasks())
+#print(db.get_task("bb57160d011445e2b02c41e4"))
+#print(db.add_task("bb57160d011445e2b02c41e2","review the budget","one of my tasks in the morning is to make lunches for everyone in the family Verb I have been tasked by the host with bringing the pies for Thanksgiving this year.",False,"08/08/2024"))
+#print(db.delete_task("bb57160d011445e2b02c41e2"))
+#db.checked_task("bb57160d011445e2b02c41e4",True)
+#print(db.update_task("bb57160d011445e2b02c41e5",body={"title":"Team Meeting","description":"Attend the weekly team meeting to discuss project updates"}))
+#print(db.search_task("to"))
+print(db.sort_tasks(False))
+#print(db.sort_tasks(True))

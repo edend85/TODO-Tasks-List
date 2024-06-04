@@ -2,8 +2,9 @@ from flask import Flask, render_template,request,url_for,redirect,abort, jsonify
 from db import DataBase
 import datetime
 import uuid
-from waitress import serve
+from dotenv import load_dotenv
 
+load_dotenv()
 
 app = Flask(__name__, template_folder="templates")
 
@@ -75,7 +76,7 @@ def edit(id):
 def editTask(id):
     tasktitle = request.form['taskTitle']
     description = request.form['description']
-    tasks.update_task(id,body={'Title':tasktitle,'Description':description})
+    tasks.update_task(id,body={'title':tasktitle,'description':description})
     return redirect(url_for("index"))
 
 @app.route("/status/<string:id>")
@@ -128,10 +129,10 @@ def search():
 
 
 if __name__ == '__main__':
-    serve(app)
+    app.run(port="3000", debug=True)
     
     
+    
 
 
 
-#app.run(port="3000", debug=False)
